@@ -4,7 +4,7 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const webpack = require("webpack");
 
 module.exports = {
-  mode: "development",
+  mode: "production",
   entry: {
     app: "./src/index.js"
   },
@@ -30,6 +30,17 @@ module.exports = {
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"]
+      },
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+            plugins: ["transform-es2015-modules-commonjs"]
+          }
+        }
       },
       {
         test: /\.(gif|png|jpe?g|svg)$/i,
