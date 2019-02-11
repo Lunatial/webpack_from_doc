@@ -1,0 +1,14 @@
+@font-face {
+    font-family: HKGrotesk-Light;
+    font-display: auto;
+    src: url("../fonts/hk-grotesk.light.ttf") format("truetype");
+  }
+
+.hello {
+  color: red;
+  background: url("../img/usj_gG3b.jpg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 400px;
+  font-family: "HKGrotesk-Light";
+}
