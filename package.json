@@ -1,6 +1,8 @@
 {
   "name": "webpack_from_doc",
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css"
+],
   "version": "1.0.0",
   "description": "",
   "private": true,
