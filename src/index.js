@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import './css/style.css';
-import Icon from './img/usj_gG3b.jpg';
+import printMe from './print.js';
 
 var arr = ['kutya', 'macska', 'sün'];
 
@@ -10,12 +10,12 @@ function component(arr = ['Hello', 'from', 'webpack']) {
     element.innerHTML = _.join(arr, ' ');
     element.classList.add('hello');
 
-    // Add the image to our existing div.
-    // var myIcon = new Image();
-    // myIcon.src = Icon;
+    var btn = document.createElement('button');
 
-    // element.appendChild(myIcon);
+    btn.innerHTML = 'Click me and check the console!';
+    btn.onclick = printMe;
 
+    element.appendChild(btn);
     return element;
   }
 
