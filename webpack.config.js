@@ -1,27 +1,34 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
 
-const devMode = process.env.NODE_ENV !== "production";
+const mode = "production";
 
 module.exports = {
-  mode: devMode ? "development" : "production",
+  mode: mode,
   entry: {
-      app: path.join(__dirname, "/src/index.js"),
+    app: path.join(__dirname, "/src/index.js")
   },
   devServer: {
     contentBase: path.join(__dirname, "dist"),
     compress: true,
     hot: true
   },
-  devtool: "inline-source-map",
+  devtool: mode === "production" ? "" : "inline-source-map",
   plugins: [
     new CleanWebpackPlugin(["dist"]),
     new HtmlWebpackPlugin({
       title: "Output Management"
     }),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: mode !== "production" ? "[name].css" : "[name].[hash].css",
+      chunkFilename: mode !== "production" ? "[id].css" : "[id].[hash].css"
+    })
   ],
   output: {
     filename: "[name].bundle.js",
@@ -31,7 +38,11 @@ module.exports = {
     rules: [
       {
         test: /\.(sa|sc|c)ss$/,
-        use: ["style-loader", "css-loader"]
+        use: [
+          mode !== "production" ? "style-loader" : MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader"
+        ]
       },
       //   {
       //     test: /\.m?js$/,
