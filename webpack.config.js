@@ -3,10 +3,12 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const webpack = require("webpack");
 
+const devMode = process.env.NODE_ENV !== "production";
+
 module.exports = {
-  mode: "production",
+  mode: devMode ? "development" : "production",
   entry: {
-    app: "./src/index.js"
+      app: path.join(__dirname, "/src/index.js"),
   },
   devServer: {
     contentBase: path.join(__dirname, "dist"),
@@ -28,20 +30,20 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
+        test: /\.(sa|sc|c)ss$/,
         use: ["style-loader", "css-loader"]
       },
-      {
-        test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env"],
-            plugins: ["transform-es2015-modules-commonjs"]
-          }
-        }
-      },
+      //   {
+      //     test: /\.m?js$/,
+      //     exclude: /(node_modules|bower_components)/,
+      //     use: {
+      //       loader: "babel-loader",
+      //       options: {
+      //         presets: ["@babel/preset-env"],
+      //         plugins: ["transform-es2015-modules-commonjs"]
+      //       }
+      //     }
+      //   },
       {
         test: /\.(gif|png|jpe?g|svg)$/i,
         use: [

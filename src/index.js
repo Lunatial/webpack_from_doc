@@ -1,8 +1,8 @@
 // import _ from "lodash";
-import "./css/style.css";
+// import "./css/style.css";
 import printMe from "./print.js";
 import { cube } from './math.js';
-// require('./css/style.css');
+require('./css/style.css');
 
 var arr = ["kutya", "macska", "sün"];
 

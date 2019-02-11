@@ -1,8 +1,6 @@
 {
   "name": "webpack_from_doc",
-  "sideEffects": [
-    "*.css"
-],
+  "sideEffects": false,
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -25,10 +23,8 @@
     "webpack-dev-server": "^3.1.14"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "webpack --watch",
-    "start": "webpack-dev-server --open",
-    "build": "webpack"
+    "start": "webpack-dev-server --open --mode development",
+    "build": "webpack --mode production"
   },
   "keywords": [],
   "author": "",
