@@ -1,26 +1,29 @@
 // import _ from "lodash";
 // import "./css/style.css";
 import printMe from "./print.js";
-import { cube } from './math.js';
-require('./css/style.css');
+import { cube } from "./math.js";
+require("./css/style.css");
 
 var arr = ["kutya", "macska", "sün"];
 
-function component(arr = ["Hello", "from", "webpack"]) {
-//   let element = document.createElement("div");
-    let element = document.createElement("pre");
+if (process.env.NODE_ENV !== "production") {
+  console.log("Looks like we are in development mode!");
+}
 
-//   element.innerHTML = _.join(arr, " ");
+function component(arr = ["Hello", "from", "webpack"]) {
+  //   let element = document.createElement("div");
+  let element = document.createElement("pre");
+
+  //   element.innerHTML = _.join(arr, " ");
   element.classList.add("hello");
 
   var btn = document.createElement("button");
   btn.innerHTML = "Click me and check the console!";
   btn.onclick = printMe;
 
-  element.innerHTML =[
-  'Hello webpack!',
-  '5 cubed is equal to ' + cube(5)
-  ].join('\n\n');
+  element.innerHTML = ["Hello webpack!", "5 cubed is equal to " + cube(5)].join(
+    "\n\n"
+  );
 
   element.appendChild(btn);
   return element;
