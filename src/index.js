@@ -1,6 +1,4 @@
-// import _ from "lodash";
-// import "./css/style.css";
-import printMe from "./print.js";
+import _ from "lodash";
 import { cube } from "./math.js";
 require("./css/style.css");
 
@@ -8,6 +6,14 @@ var arr = ["kutya", "macska", "sün"];
 
 if (process.env.NODE_ENV !== "production") {
   console.log("Looks like we are in development mode!");
+  if (module.hot) {
+    module.hot.accept("./print.js", function() {
+      console.log("Accepting the updated printMe module!");
+      document.body.removeChild(element);
+      element = component(); // Re-render the "component" to update the click handler
+      document.body.appendChild(element);
+    });
+  }
 }
 
 function component(arr = ["Hello", "from", "webpack"]) {
@@ -19,12 +25,22 @@ function component(arr = ["Hello", "from", "webpack"]) {
 
   var btn = document.createElement("button");
   btn.innerHTML = "Click me and check the console!";
-  btn.onclick = printMe;
+  // Note that because a network request is involved, some indication
+  // of loading would need to be shown in a production-level site/app.
+  btn.onclick = e =>
+    import(/* webpackChunkName: "print" */ "./print").then(module => {
+      var print = module.default;
 
-  element.innerHTML = ["Hello webpack!", "5 cubed is equal to " + cube(5)].join(
+      print();
+    });
+
+  element.innerHTML = ["Hello webpack!", "5 a harmadikon = " + cube(5)].join(
     "\n\n"
   );
 
+  var brElement = document.createElement("br");
+
+  element.appendChild(brElement);
   element.appendChild(btn);
   return element;
 }
@@ -32,24 +48,20 @@ function component(arr = ["Hello", "from", "webpack"]) {
 let element = component(); // Store the element to re-render on print.js changes
 document.body.appendChild(element);
 
-if (module.hot) {
-  module.hot.accept("./print.js", function() {
-    console.log("Accepting the updated printMe module!");
-    document.body.removeChild(element);
-    element = component(); // Re-render the "component" to update the click handler
-    document.body.appendChild(element);
-  });
+async function getComponent() {
+  const { join } = await import(/* webpackChunkName: "lodash" */ "lodash");
+  var divElement = document.createElement("div");
+  var pElement = document.createElement("p");
+  var brElement = document.createElement("br");
+
+  pElement.innerHTML = join(["Lodashhal", "behúzva", "a", "component"], " ");
+
+  divElement.appendChild(brElement);
+  divElement.appendChild(pElement);
+
+  return divElement;
 }
 
- async function getComponent() {
-   var element = document.createElement('div');
-     const { join } = await import(/* webpackChunkName: "lodash" */ 'lodash');
-
-       element.innerHTML = join(['Hello', 'webpack'], ' ');
-
-       return element;
-  }
-
 getComponent().then(component => {
-    document.body.appendChild(component);
+  document.body.appendChild(component);
 });
