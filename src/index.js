@@ -17,14 +17,13 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 function component(arr = ["Hello", "from", "webpack"]) {
-  //   let element = document.createElement("div");
   let element = document.createElement("pre");
 
-  //   element.innerHTML = _.join(arr, " ");
   element.classList.add("hello");
 
   var btn = document.createElement("button");
   btn.innerHTML = "Click me and check the console!";
+
   // Note that because a network request is involved, some indication
   // of loading would need to be shown in a production-level site/app.
   btn.onclick = e =>
@@ -45,8 +44,8 @@ function component(arr = ["Hello", "from", "webpack"]) {
   return element;
 }
 
-let element = component(); // Store the element to re-render on print.js changes
-document.body.appendChild(element);
+let mainComponent = component();
+document.body.appendChild(mainComponent);
 
 async function getComponent() {
   const { join } = await import(/* webpackChunkName: "lodash" */ "lodash");
